@@ -7,7 +7,7 @@
 Udacity nanodegree github project
 
 ### Description
-Describe what your project is about and what it does
+This project's purpose is to test my knowlege of git and github
 
 ### Files used
 Include the files used
