@@ -73,19 +73,14 @@ def load_data(city, month, day):
     # convert the Start Time column to datetime
     df['Start Time'] = pd.to_datetime(df['Start Time'])
 
-    # extract month and day of week from Start Time to create new columns
-    df['month'] = df['Start Time'].dt.month
+    # extract day of week from Start Time to create new columns
     df['day of week'] = df['Start Time'].dt.day_name()
 
 
     # filter by month if applicable
     if month != 'all':
-        # use the index of the months list to get the corresponding int
-        months = ['january', 'february', 'march', 'april', 'may', 'june']
-        month = months.index(month)+1
-
-        # filter by month to create the new dataframe
-        df = df[df['month'] == month]
+        # filter by supplied month to create the new dataframe
+        df = df[df['Start Time'].dt.month_name() == month.capitalize()]
 
     # filter by day of week if applicable
     if day != 'all':
@@ -102,8 +97,8 @@ def time_stats(df):
 
     # display the most common month if month = 'all', otherwise print msg stating month they chose
     months = ['january', 'february', 'march', 'april', 'may', 'june']
-    comm_month = months[df['month'].mode()[0]-1]
-    if df['month'].nunique() == 1:
+    comm_month = df['Start Time'].dt.month_name().mode()[0]
+    if df['Start Time'].dt.month_name().nunique() == 1:
         print('You selected', comm_month.capitalize(), 'as your report month')
     else:
         print('The most common month for hiring a bike is...', comm_month.capitalize())
