@@ -112,7 +112,10 @@ def time_stats(df):
 
 
     # display the most common start hour
-    comm_hour = df['Start Time'].dt.hour.mode()[0]
+    if df['Start Time'].dt.hour.mode()[0] <= 12:
+        comm_hour = str(df['Start Time'].dt.hour.mode()[0]) + 'am'
+    else:
+        comm_hour = str(df['Start Time'].dt.hour.mode()[0] - 12) + 'pm'
     print('The most common hour for hiring a bike is...', comm_hour)
 
     print("\nThis took %s seconds." % round((time.time() - start_time),2))
